@@ -38,11 +38,47 @@ print_words() and print_top().
 """
 
 import sys
+import string
+import operator
+
+def word_count_dict(filename):
+    
+    word_count = {} # create a dict, key = word, value = count
+    
+    f = open(filename, 'rU') # read file, universal option for robust line-ending
+    
+    for line in f: # iterate over the lines of the file
+        words = line.split() # split a line into a list of words by whitespace
+                
+        
+        for word in words: # iterate over the list of words
+            word = word.lower() # transform into lower case
+            word = word.translate(None, string.punctuation) # remove punctuation
+            if word not in word_count:
+                word_count[word] = 1
+            else:
+                word_count[word] = word_count[word] + 1
+                
+    return word_count
 
 def print_words(filename):
     
+    word_count = word_count_dict(filename) # build up the dict
+    sorted_words = sorted(word_count.keys()) # sorted by the keys, i.e. the words
+    for word in sorted_words:
+        print word, word_count[word]
+
     
+    
+
 def print_top(filename):
+    
+    word_count = word_count_dict(filename) # build up the dict
+    sorted_words = sorted(word_count.iteritems(), key = operator.itemgetter(1), 
+                          reverse = True) # sorted by the values, i.e. the counts
+    
+    for word in sorted_words[:20]: 
+        print word[0], word[1]
 
 
 # Define print_words(filename) and print_top(filename) functions.
@@ -54,6 +90,7 @@ def print_top(filename):
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
+
 def main():
   if len(sys.argv) != 3:
     print 'usage: ./wordcount.py {--count | --topcount} file'

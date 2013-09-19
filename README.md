@@ -4,3 +4,4 @@ Work in Progress:
 
 * string
 * list
+* wordcount
