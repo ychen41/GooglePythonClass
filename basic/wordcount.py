@@ -59,7 +59,7 @@ def word_count_dict(filename):
             else:
                 word_count[word] = word_count[word] + 1
                 
-    return word_count
+    return word_count # return the dict
 
 def print_words(filename):
     
